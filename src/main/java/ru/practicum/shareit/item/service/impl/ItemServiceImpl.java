@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.AlreadyExistsException;
 import ru.practicum.shareit.exceptions.NotFoundException;
@@ -81,7 +82,7 @@ public class ItemServiceImpl implements ItemCrudService<ItemDto> {
         if (itemDto.getAvailable() == null) {
             throw new ValidationException(AVAILABLE_NOT_FOUND.getTitle());
         }
-        if (itemDto.getName().equals("")) {
+        if (!StringUtils.isNotBlank(itemDto.getName())) {
             throw new ValidationException(EMPTY_NAME.getTitle());
         }
         if (itemDto.getDescription() == null) {

@@ -18,6 +18,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<aspectj.version>1.9.9.1</aspectj.version>
+		<commons-lang3.version>3.11</commons-lang3.version>
 	</properties>
 
 	<dependencies>
@@ -66,9 +67,9 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.java-json-tools</groupId>
-			<artifactId>json-patch</artifactId>
-			<version>1.13</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 	</dependencies>
 

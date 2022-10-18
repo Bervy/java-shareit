@@ -34,7 +34,6 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> update(User user) {
         users.put(user.getId(), user);
         return Optional.of(user);
-
     }
 
     @Override
