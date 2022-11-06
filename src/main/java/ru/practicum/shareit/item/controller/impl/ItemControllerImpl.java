@@ -2,6 +2,8 @@ package ru.practicum.shareit.item.controller.impl;
 
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.controller.ItemCrudController;
+import ru.practicum.shareit.item.dto.CommentDto;
+import ru.practicum.shareit.item.dto.CommentFullDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.impl.ItemServiceImpl;
 
@@ -28,8 +30,9 @@ public class ItemControllerImpl implements ItemCrudController<ItemDto> {
 
     @Override
     @GetMapping("/{itemId}")
-    public Optional<ItemDto> findById(@PathVariable("itemId") @Min(0) long itemId) {
-        return itemService.findById(itemId);
+    public Optional<ItemDto> findById(@PathVariable("itemId") @Min(0) long itemId,
+                                      @RequestHeader("X-Sharer-User-Id") long userId) {
+        return itemService.findById(itemId, userId);
     }
 
     @Override
@@ -58,4 +61,11 @@ public class ItemControllerImpl implements ItemCrudController<ItemDto> {
     public List<ItemDto> search(@RequestParam(value = "text") String text) {
         return itemService.search(text);
     }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentFullDto addComment(@RequestHeader("X-Sharer-User-Id") Long authorId, @PathVariable long itemId,
+                                     @RequestBody CommentDto commentDto) {
+        return itemService.addComment(authorId, itemId, commentDto);
+    }
+
 }

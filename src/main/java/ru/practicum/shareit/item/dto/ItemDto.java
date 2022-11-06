@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.practicum.shareit.booking.dto.BookingShortDto;
+import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.user.model.User;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -14,6 +19,9 @@ public class ItemDto {
     private String name;
     private String description;
     private Boolean available;
-    private long owner;
-    private Long request;
+    private User owner;
+    private ItemRequest request;
+    private BookingShortDto lastBooking;
+    private BookingShortDto nextBooking;
+    private List<CommentFullDto> comments;
 }

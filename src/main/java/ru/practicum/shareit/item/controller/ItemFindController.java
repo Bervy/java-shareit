@@ -7,5 +7,5 @@ public interface ItemFindController<T> {
 
     List<T> findAll(long userId);
 
-    Optional<T> findById(long id);
+    Optional<T> findById(long id, long userId);
 }
