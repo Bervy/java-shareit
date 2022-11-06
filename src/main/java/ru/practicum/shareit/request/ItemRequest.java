@@ -11,7 +11,7 @@ import java.util.Objects;
  * TODO Sprint add-item-requests.
  */
 @Entity
-@Table(name = "item_request")
+@Table(name = "requests")
 @Getter
 @Setter
 @ToString
@@ -25,7 +25,7 @@ public class ItemRequest {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "requester_id", referencedColumnName = "id")
+    @JoinColumn(name = "requestor_id", referencedColumnName = "id")
     private User requestor;
 
     @Column(name = "created")
