@@ -49,8 +49,8 @@ public class ItemServiceImpl implements ItemCrudService<ItemDto> {
 
     @Override
     public List<ItemDto> findAll(long userId) {
-        List<ItemDto> itemDtoList = itemRepository.findAllByOwnerId(userId).
-                stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
+        List<ItemDto> itemDtoList = itemRepository.findAllByOwnerId(userId)
+                        .stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
         for (ItemDto itemDto : itemDtoList) {
             setLastAndNextBooking(itemDto);
             itemDto.setComments(commentRepository.findAllByItemId(itemDto.getId())

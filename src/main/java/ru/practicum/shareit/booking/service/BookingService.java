@@ -59,8 +59,9 @@ public class BookingService {
     }
 
     public Optional<BookingFullDto> getByIdAndBookerOrOwner(Long userId, Long bookingId) {
-        return Optional.ofNullable(BookingMapper.toBookingFullDto(bookingRepository.findByIdAndBookerOrOwner(bookingId, userId).
-                orElseThrow(() -> new NotFoundException(BOOKING_NOT_FOUND.getTitle()))));
+        return Optional.ofNullable(BookingMapper.toBookingFullDto(
+                bookingRepository.findByIdAndBookerOrOwner(bookingId, userId)
+                        .orElseThrow(() -> new NotFoundException(BOOKING_NOT_FOUND.getTitle()))));
     }
 
     public List<BookingFullDto> getAllByBooker(Long bookerId, String stateBooking) {
