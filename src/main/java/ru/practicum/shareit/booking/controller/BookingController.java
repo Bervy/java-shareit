@@ -1,55 +1,20 @@
 package ru.practicum.shareit.booking.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingFullDto;
-import ru.practicum.shareit.booking.service.BookingService;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping(path = "/bookings")
-public class BookingController {
+public interface BookingController {
 
-    private final BookingService service;
+    Optional<BookingFullDto> create(Long bookerId, BookingDto bookingDto);
 
-    @PostMapping
-    public Optional<BookingFullDto> create(
-            @RequestHeader("X-Sharer-User-Id") Long bookerId,
-            @RequestBody @Valid BookingDto bookingDto) {
-        return service.create(bookerId, bookingDto);
-    }
+    Optional<BookingFullDto> confirmation(Long ownerItemId, Long bookingId, boolean approved);
 
-    @PatchMapping("/{bookingId}")
-    public Optional<BookingFullDto> confirmation(
-            @RequestHeader("X-Sharer-User-Id") Long ownerItemId,
-            @PathVariable Long bookingId,
-            @RequestParam(value = "approved") Boolean approved) {
-        return service.confirmation(ownerItemId, bookingId, approved);
-    }
+    Optional<BookingFullDto> getByIdAndBookerOrOwner(Long userId, Long bookingId);
 
-    @GetMapping("/{bookingId}")
-    public Optional<BookingFullDto> getById(
-            @RequestHeader("X-Sharer-User-Id") Long userId,
-            @PathVariable Long bookingId) {
-        return service.getByIdAndBookerOrOwner(userId, bookingId);
-    }
+    List<BookingFullDto> getAllByBooker(Long bookerId, String state);
 
-    @GetMapping()
-    public List<BookingFullDto> getAllByBooker(
-            @RequestHeader("X-Sharer-User-Id") Long bookerId,
-            @RequestParam(value = "state", required = false, defaultValue = "ALL") String state) {
-        return service.getAllByBooker(bookerId, state);
-    }
-
-    @GetMapping("/owner")
-    public List<BookingFullDto> getAllByOwner(
-            @RequestHeader("X-Sharer-User-Id") Long bookerId,
-            @RequestParam(value = "state", required = false, defaultValue = "ALL") String state) {
-        return service.getAllByOwner(bookerId, state);
-    }
+    List<BookingFullDto> getAllByOwner(Long bookerId, String state);
 }

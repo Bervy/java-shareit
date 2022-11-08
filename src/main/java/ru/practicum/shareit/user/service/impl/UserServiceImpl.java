@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.AlreadyExistsException;
 import ru.practicum.shareit.exceptions.NotFoundException;
@@ -17,13 +18,10 @@ import java.util.stream.Collectors;
 import static ru.practicum.shareit.error.ExceptionDescriptions.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserCrudService<UserDto> {
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<UserDto> findAll() {

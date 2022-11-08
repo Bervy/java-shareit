@@ -2,6 +2,7 @@ package ru.practicum.shareit.booking.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.booking.controller.BookingController;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingFullDto;
 import ru.practicum.shareit.booking.enums.BookingState;
@@ -25,21 +26,27 @@ import static ru.practicum.shareit.error.ExceptionDescriptions.*;
 
 @Service
 @RequiredArgsConstructor
-public class BookingService {
+public class BookingService implements BookingController {
 
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
 
+    @Override
     public Optional<BookingFullDto> create(Long bookerId, BookingDto bookingDto) {
-        if (bookingDto.getEnd().isBefore(bookingDto.getStart())) throw new ValidationException(
-                BOOKING_START_DATE_LATER_END_DATE.getTitle());
+        if (bookingDto.getEnd().isBefore(bookingDto.getStart())) {
+            throw new ValidationException(BOOKING_START_DATE_LATER_END_DATE.getTitle());
+        }
 
         Item item = itemRepository.findById(bookingDto.getItemId())
                 .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND.getTitle()));
 
-        if (!item.isAvailable()) throw new ValidationException(ITEM_UNAVAILABLE.getTitle());
-        if (item.getOwner().getId() == bookerId) throw new NotFoundException(USER_RESERVE_OWN_ITEM.getTitle());
+        if (!item.isAvailable()) {
+            throw new ValidationException(ITEM_UNAVAILABLE.getTitle());
+        }
+        if (item.getOwner().getId() == bookerId) {
+            throw new NotFoundException(USER_RESERVE_OWN_ITEM.getTitle());
+        }
 
         User booker = userRepository.findById(bookerId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getTitle()));
@@ -47,23 +54,26 @@ public class BookingService {
                 BookingMapper.fromBookingDto(bookingDto, item, booker, BookingStatus.WAITING))));
     }
 
+    @Override
     public Optional<BookingFullDto> confirmation(Long ownerId, Long bookingId, boolean approved) {
         Booking booking = bookingRepository.findByIdAndItemOwnerId(bookingId, ownerId).orElseThrow(
-                () -> new NotFoundException(BOOKING_NOT_FOUND.getTitle())
-        );
+                () -> new NotFoundException(BOOKING_NOT_FOUND.getTitle()));
 
-        if (booking.getStatus() == BookingStatus.APPROVED) throw new ValidationException(
-                BOOKING_ALREADY_CONFIRMED.getTitle());
+        if (booking.getStatus() == BookingStatus.APPROVED) {
+            throw new ValidationException(BOOKING_ALREADY_CONFIRMED.getTitle());
+        }
         booking.setStatus(approved ? BookingStatus.APPROVED : BookingStatus.REJECTED);
         return Optional.ofNullable(BookingMapper.toBookingFullDto(bookingRepository.save(booking)));
     }
 
+    @Override
     public Optional<BookingFullDto> getByIdAndBookerOrOwner(Long userId, Long bookingId) {
         return Optional.ofNullable(BookingMapper.toBookingFullDto(
                 bookingRepository.findByIdAndBookerOrOwner(bookingId, userId)
                         .orElseThrow(() -> new NotFoundException(BOOKING_NOT_FOUND.getTitle()))));
     }
 
+    @Override
     public List<BookingFullDto> getAllByBooker(Long bookerId, String stateBooking) {
         BookingState state = getValidState(stateBooking);
         validationUser(bookerId);
@@ -72,6 +82,7 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<BookingFullDto> getAllByOwner(Long ownerId, String stateBooking) {
         BookingState state = getValidState(stateBooking);
         validationUser(ownerId);

@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.enums.BookingStatus;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 import static ru.practicum.shareit.error.ExceptionDescriptions.*;
 
 @Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemCrudService<ItemDto> {
 
     private final ItemRepository itemRepository;
@@ -37,20 +39,10 @@ public class ItemServiceImpl implements ItemCrudService<ItemDto> {
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository,
-                           UserRepository userRepository,
-                           BookingRepository bookingRepository,
-                           CommentRepository commentRepository) {
-        this.itemRepository = itemRepository;
-        this.userRepository = userRepository;
-        this.bookingRepository = bookingRepository;
-        this.commentRepository = commentRepository;
-    }
-
     @Override
     public List<ItemDto> findAll(long userId) {
         List<ItemDto> itemDtoList = itemRepository.findAllByOwnerId(userId)
-                        .stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
+                .stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
         for (ItemDto itemDto : itemDtoList) {
             setLastAndNextBooking(itemDto);
             itemDto.setComments(commentRepository.findAllByItemId(itemDto.getId())
@@ -123,7 +115,7 @@ public class ItemServiceImpl implements ItemCrudService<ItemDto> {
                 .filter(b -> b.getEnd().isBefore(LocalDateTime.now()))
                 .findFirst()
                 .orElseThrow(() -> new ValidationException(NO_MATCHING_BOOKINGS.getTitle()));
-        if (booking.getStatus().equals(BookingStatus.APPROVED)) {
+        if (booking.getStatus() == BookingStatus.APPROVED) {
             User author = userRepository.findById(authorId)
                     .orElseThrow(() -> new ValidationException(USER_NOT_FOUND.getTitle()));
             Item item = itemRepository.findById(itemId)
