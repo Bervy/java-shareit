@@ -15,25 +15,24 @@ public class ErrorHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(final RuntimeException e) {
-        return new ErrorResponse("Not found", e.getMessage());
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleAlreadyExistsException(final RuntimeException e) {
-        return new ErrorResponse("Conflict", e.getMessage());
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(final Exception e) {
-        return new ErrorResponse("Bad request", e.getMessage());
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleThrowable(final Throwable e) {
-        return new ErrorResponse("Server error",
-                "An unexpected error has occurred " + e.getMessage());
+        return new ErrorResponse(e.getMessage());
     }
 }

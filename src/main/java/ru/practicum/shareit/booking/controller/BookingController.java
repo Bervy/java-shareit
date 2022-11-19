@@ -1,12 +1,20 @@
 package ru.practicum.shareit.booking.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.booking.dto.BookingFullDto;
 
-/**
- * TODO Sprint add-bookings.
- */
-@RestController
-@RequestMapping(path = "/bookings")
-public class BookingController {
+import java.util.List;
+import java.util.Optional;
+
+public interface BookingController {
+
+    Optional<BookingFullDto> create(Long bookerId, BookingDto bookingDto);
+
+    Optional<BookingFullDto> confirmation(Long ownerItemId, Long bookingId, boolean approved);
+
+    Optional<BookingFullDto> getByIdAndBookerOrOwner(Long userId, Long bookingId);
+
+    List<BookingFullDto> getAllByBooker(Long bookerId, String state);
+
+    List<BookingFullDto> getAllByOwner(Long bookerId, String state);
 }
