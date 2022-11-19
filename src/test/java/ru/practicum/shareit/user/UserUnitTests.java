@@ -31,8 +31,8 @@ class UserUnitTests {
     @InjectMocks
     private UserServiceImpl userService;
 
-    private final static long ID_1 = 1L;
-    private final static long ID_2 = 2L;
+    private static final long ID_1 = 1L;
+    private static final long ID_2 = 2L;
     private final User user1 = User.builder()
             .id(ID_1)
             .name("userName1")

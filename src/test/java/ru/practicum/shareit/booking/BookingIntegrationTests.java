@@ -32,8 +32,8 @@ class BookingIntegrationTests {
     private final UserMapper userMapper;
     private final ItemMapper itemMapper;
 
-    private final static long OWNER_ID = 1L;
-    private final static long BOOKER_ID = 2L;
+    private static final long OWNER_ID = 1L;
+    private static final long BOOKER_ID = 2L;
     private final User owner = User.builder()
             .name("userName1")
             .email("mail1@ya.ru").build();

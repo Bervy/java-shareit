@@ -49,17 +49,17 @@ class BookingUnitTests {
     @InjectMocks
     private BookingService bookingService;
 
-    private final static long ID_1 = 1L;
-    private final static long ID_2 = 2L;
-    private final static int FROM = 0;
-    private final static int SIZE = 5;
-    private final static LocalDateTime START = LocalDateTime.of(2022, 11, 5, 1, 1);
-    private final static LocalDateTime START_LATER_END =
+    private static final  long ID_1 = 1L;
+    private static final long ID_2 = 2L;
+    private static final int FROM = 0;
+    private static final int SIZE = 5;
+    private static final LocalDateTime START = LocalDateTime.of(2022, 11, 5, 1, 1);
+    private static final LocalDateTime START_LATER_END =
             LocalDateTime.of(2022, 11, 8, 1, 1);
-    private final static LocalDateTime END = LocalDateTime.of(2022, 11, 7, 1, 1);
-    private final static Sort SORT = Sort.by(Sort.Direction.DESC, "start");
-    private final static Pageable PAGE = PageRequest.of(0, 5);
-    private final static Pageable PAGE_SORT = PageRequest.of(0, 5, SORT);
+    private static final LocalDateTime END = LocalDateTime.of(2022, 11, 7, 1, 1);
+    private static final Sort SORT = Sort.by(Sort.Direction.DESC, "start");
+    private static final Pageable PAGE = PageRequest.of(0, 5);
+    private static final Pageable PAGE_SORT = PageRequest.of(0, 5, SORT);
     private BookingDto bookingDto = new BookingDto();
     private User owner = new User();
     private User booker = new User();

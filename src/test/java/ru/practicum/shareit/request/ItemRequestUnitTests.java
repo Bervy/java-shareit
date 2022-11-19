@@ -93,7 +93,7 @@ class ItemRequestUnitTests {
         when(userRepository.findById(user1.getId())).thenReturn(Optional.of(user1));
         when(itemRepository.findAllByRequestId(itemRequestDto.getId())).thenReturn(List.of(item));
 
-        List<ItemRequestDto>itemRequestsResult = itemRequestService.findAllByOwner(user1.getId());
+        List<ItemRequestDto> itemRequestsResult = itemRequestService.findAllByOwner(user1.getId());
 
         int expectedSize = 1;
         assertNotNull(itemRequestsResult);
@@ -110,7 +110,7 @@ class ItemRequestUnitTests {
         when(userRepository.findById(user2.getId())).thenReturn(Optional.of(user2));
         when(itemRepository.findAllByRequestId(itemRequestDto.getId())).thenReturn(List.of(item));
 
-        List<ItemRequestDto>itemRequestsResult = itemRequestService.findAllByAnotherUser(user2.getId(), FROM, SIZE);
+        List<ItemRequestDto> itemRequestsResult = itemRequestService.findAllByAnotherUser(user2.getId(), FROM, SIZE);
 
         int expectedSize = 1;
         assertNotNull(itemRequestsResult);

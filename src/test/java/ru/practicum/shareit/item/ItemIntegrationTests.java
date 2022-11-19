@@ -35,8 +35,8 @@ class ItemIntegrationTests {
     private final LocalDateTime end = LocalDateTime.of(2022, 11, 7, 1, 1);
     private static final long ID_1 = 1L;
     private static final long ID_2 = 2L;
-    private final static int FROM = 0;
-    private final static int SIZE = 5;
+    private static final int FROM = 0;
+    private static final int SIZE = 5;
     private final User owner = User.builder()
             .name("userName1")
             .email("userMail1@ya.ru")
