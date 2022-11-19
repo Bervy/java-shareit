@@ -14,7 +14,7 @@ public interface BookingController {
 
     Optional<BookingFullDto> getByIdAndBookerOrOwner(Long userId, Long bookingId);
 
-    List<BookingFullDto> getAllByBooker(Long bookerId, String state);
+    List<BookingFullDto> getAllByBooker(Long bookerId, String state, int from, int size);
 
-    List<BookingFullDto> getAllByOwner(Long bookerId, String state);
+    List<BookingFullDto> getAllByOwner(Long bookerId, String state, int from, int size);
 }

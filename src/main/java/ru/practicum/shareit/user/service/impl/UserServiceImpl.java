@@ -2,7 +2,6 @@ package ru.practicum.shareit.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exceptions.AlreadyExistsException;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidationException;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -22,33 +21,34 @@ import static ru.practicum.shareit.error.ExceptionDescriptions.*;
 public class UserServiceImpl implements UserCrudService<UserDto> {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public List<UserDto> findAll() {
         return userRepository.findAll()
                 .stream()
-                .map(UserMapper::toUserDto)
+                .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<UserDto> findById(long userId) {
-        return Optional.ofNullable(UserMapper.toUserDto(userRepository.findById(userId)
+        return Optional.ofNullable(userMapper.toUserDto(userRepository.findById(userId)
                 .orElseThrow((() -> new NotFoundException(USER_NOT_FOUND.getTitle())))));
     }
 
     @Override
     public Optional<UserDto> save(UserDto userDto) {
         validationSave(userDto);
-        return Optional.ofNullable(UserMapper.toUserDto(Optional.of(userRepository.save(UserMapper.fromUserDto(userDto)))
-                .orElseThrow((() -> new AlreadyExistsException(USER_ALREADY_EXISTS.getTitle())))));
+        User user = userRepository.save(userMapper.fromUserDto(userDto));
+        return Optional.ofNullable(userMapper.toUserDto(user));
     }
 
     @Override
     public Optional<UserDto> update(long userId, UserDto userDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getTitle()));
         validationUpdate(user, userDto);
-        return Optional.ofNullable(UserMapper.toUserDto(Optional.of(userRepository.save(user))
+        return Optional.ofNullable(userMapper.toUserDto(Optional.of(userRepository.save(user))
                 .orElseThrow((() -> new NotFoundException(USER_NOT_FOUND.getTitle())))));
     }
 

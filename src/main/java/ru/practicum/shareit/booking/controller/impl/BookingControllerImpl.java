@@ -47,15 +47,23 @@ public class BookingControllerImpl implements BookingController {
     @GetMapping
     public List<BookingFullDto> getAllByBooker(
             @RequestHeader("X-Sharer-User-Id") Long bookerId,
-            @RequestParam(value = "state", required = false, defaultValue = "ALL") String state) {
-        return service.getAllByBooker(bookerId, state);
+            @RequestParam(value = "state", required = false, defaultValue = "ALL") String state,
+            @RequestParam(value = "from", required = false, defaultValue = "0")
+            int from,
+            @RequestParam(value = "size", required = false, defaultValue = "10")
+            int size) {
+        return service.getAllByBooker(bookerId, state, from, size);
     }
 
     @Override
     @GetMapping("/owner")
     public List<BookingFullDto> getAllByOwner(
             @RequestHeader("X-Sharer-User-Id") Long bookerId,
-            @RequestParam(value = "state", required = false, defaultValue = "ALL") String state) {
-        return service.getAllByOwner(bookerId, state);
+            @RequestParam(value = "state", required = false, defaultValue = "ALL") String state,
+            @RequestParam(value = "from", required = false, defaultValue = "0")
+            int from,
+            @RequestParam(value = "size", required = false, defaultValue = "10")
+            int size) {
+        return service.getAllByOwner(bookerId, state, from, size);
     }
 }

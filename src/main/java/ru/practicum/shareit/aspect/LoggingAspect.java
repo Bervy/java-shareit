@@ -12,17 +12,7 @@ import java.util.Arrays;
 @Component
 public class LoggingAspect {
 
-    @Pointcut(value = "execution(* ru.practicum.shareit.*.controller.*.*(..))")
-    public void controllerPointcut() {
-
-    }
-
-    @Pointcut(value = "execution(* ru.practicum.shareit.*.*.*.*(..))")
-    public void allPointcut() {
-
-    }
-
-    @Before("controllerPointcut()")
+    @Before("execution(* ru.practicum.shareit.*.controller.*.*(..))")
     public void logBeforeMethodsAdvice(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().toString();
@@ -31,14 +21,14 @@ public class LoggingAspect {
                 + Arrays.toString(array));
     }
 
-    @After("controllerPointcut()")
+    @After("execution(* ru.practicum.shareit.*.controller.*.*(..))")
     public void logAfterMethodsAdvice(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().toString();
         log.info("Successful execution of the method " + className + " : " + methodName + "()");
     }
 
-    @AfterThrowing(value = "allPointcut()", throwing = "ex")
+    @AfterThrowing(value = "execution(* ru.practicum.shareit.*.*.*.*(..))", throwing = "ex")
     public void afterThrowingAdvice(JoinPoint joinPoint, Exception ex) {
         log.info("After throwing exception in method : " + joinPoint.getSignature());
         log.info("Exception is  : " + ex.getMessage());

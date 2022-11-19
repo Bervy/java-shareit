@@ -1,6 +1,6 @@
 package ru.practicum.shareit.booking.mapper;
 
-import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingFullDto;
 import ru.practicum.shareit.booking.dto.BookingShortDto;
@@ -9,10 +9,10 @@ import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
-@UtilityClass
+@Component
 public class BookingMapper {
 
-    public static BookingFullDto toBookingFullDto(Booking booking) {
+    public BookingFullDto toBookingFullDto(Booking booking) {
         return BookingFullDto.builder()
                 .id(booking.getId())
                 .start(booking.getStart())
@@ -25,7 +25,7 @@ public class BookingMapper {
                 .build();
     }
 
-    public static BookingShortDto toBookingShortDto(Booking booking) {
+    public BookingShortDto toBookingShortDto(Booking booking) {
         return BookingShortDto.builder()
                 .id(booking.getId())
                 .start(booking.getStart())
@@ -35,7 +35,7 @@ public class BookingMapper {
                 .build();
     }
 
-    public static Booking fromBookingDto(BookingDto dto, Item item, User booker, BookingStatus status) {
+    public Booking fromBookingDto(BookingDto dto, Item item, User booker, BookingStatus status) {
         return Booking.builder()
                 .start(dto.getStart())
                 .end(dto.getEnd())
