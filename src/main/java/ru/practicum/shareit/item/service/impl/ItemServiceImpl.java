@@ -172,7 +172,9 @@ public class ItemServiceImpl implements ItemCrudService<ItemFullDto> {
 
     private void setComments(ItemFullDto itemDto, long itemId) {
         itemDto.setComments(commentRepository.findAllByItemId(itemId)
-                .stream().map(commentMapper::toCommentFullDto).collect(Collectors.toList()));
+                .stream()
+                .map(commentMapper::toCommentFullDto)
+                .collect(Collectors.toList()));
     }
 
     private void validateFromAndSize(int from, int size) {

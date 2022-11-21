@@ -34,18 +34,21 @@ public class ItemRequestService {
     public List<ItemRequestDto> findAllByOwner(long userId) {
         validateUser(userId);
         List<ItemRequestDto> itemRequests = itemRequestRepository.findAllByRequestorId(userId)
-                .stream().map(itemRequestMapper::toItemRequestDto).collect(Collectors.toList());
+                .stream()
+                .map(itemRequestMapper::toItemRequestDto)
+                .collect(Collectors.toList());
         setItems(itemRequests);
         return itemRequests;
-
     }
 
     public List<ItemRequestDto> findAllByAnotherUser(long userId, int from, int size) {
         validateFromAndSize(from, size);
         User user = getValidUser(userId);
         List<ItemRequestDto> itemRequests = itemRequestRepository
-                .findAllByRequestorNotLikeOrderByCreatedAsc(user, PageRequest.of(from / size, size)).stream()
-                .map(itemRequestMapper::toItemRequestDto).collect(Collectors.toList());
+                .findAllByRequestorNotLikeOrderByCreatedAsc(user, PageRequest.of(from / size, size))
+                .stream()
+                .map(itemRequestMapper::toItemRequestDto)
+                .collect(Collectors.toList());
         setItems(itemRequests);
         return itemRequests;
 
@@ -58,7 +61,9 @@ public class ItemRequestService {
         ItemRequestDto itemRequestDto = itemRequestMapper.toItemRequestDto(itemRequest);
         List<Item> items = itemRepository.findAllByRequestId(itemRequestDto.getId());
         itemRequestDto.setItems(items
-                .stream().map(itemMapper::toItemShortDto).collect(Collectors.toList()));
+                .stream()
+                .map(itemMapper::toItemShortDto)
+                .collect(Collectors.toList()));
         return Optional.of(itemRequestDto);
     }
 
@@ -87,7 +92,9 @@ public class ItemRequestService {
     private void setItems(List<ItemRequestDto> itemRequests) {
         for (ItemRequestDto itemRequestDto : itemRequests) {
             itemRequestDto.setItems(itemRepository.findAllByRequestId(itemRequestDto.getId())
-                    .stream().map(itemMapper::toItemShortDto).collect(Collectors.toList()));
+                    .stream()
+                    .map(itemMapper::toItemShortDto)
+                    .collect(Collectors.toList()));
         }
     }
 }

@@ -25,7 +25,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ItemRequestIntegrationTests {
     private final UserServiceImpl userService;
     private final ItemRequestService itemRequestService;
@@ -58,6 +57,7 @@ class ItemRequestIntegrationTests {
             .created(LocalDateTime.now()).build();
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void testFindItemRequestById() throws ValidationException {
         userService.save(userMapper.toUserDto(user));
         itemRequest.setRequestor(user);

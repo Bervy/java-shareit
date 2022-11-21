@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class BookingIntegrationTests {
     private final UserServiceImpl userService;
     private final ItemServiceImpl itemService;
@@ -57,6 +56,7 @@ class BookingIntegrationTests {
             .build();
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     void getAllByBooker_shouldReturnAllBookingsByBookerId() {
         userService.save(userMapper.toUserDto(owner));
         userService.save(userMapper.toUserDto(booker));
