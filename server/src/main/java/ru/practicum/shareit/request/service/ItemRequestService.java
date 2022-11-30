@@ -44,8 +44,8 @@ public class ItemRequestService {
     public List<ItemRequestDto> findAllByAnotherUser(long userId, int from, int size) {
         User user = getValidUser(userId);
         List<ItemRequestDto> itemRequests = itemRequestRepository
-                .findAllByRequestorIsNot(user, PageRequest.of(from / size, size
-                        , Sort.by(Sort.Direction.DESC, "created")))
+                .findAllByRequestorIsNot(user, PageRequest.of(from / size, size,
+                        Sort.by(Sort.Direction.DESC, "created")))
                 .stream()
                 .map(itemRequestMapper::toItemRequestDto)
                 .collect(Collectors.toList());
