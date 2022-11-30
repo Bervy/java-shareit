@@ -17,7 +17,10 @@ public enum ExceptionDescriptions {
     BOOKING_NOT_FOUND("Booking not found"),
     BOOKING_ALREADY_CONFIRMED("Booking already confirmed"),
     NO_MATCHING_BOOKINGS("No matching bookings"),
-    FORBIDDEN_TO_ADD_COMMENTS("Forbidden to add comments");
+    FORBIDDEN_TO_ADD_COMMENTS("Forbidden to add comments"),
+    UNKNOWN_STATE("Unknown state: UNSUPPORTED_STATUS"),
+    FROM_OR_SIZE_LESS_THAN_ZERO("From or size less than zero"),
+    ITEM_REQUEST_NOT_FOUND("Item request not found");
 
     private final String title;
 

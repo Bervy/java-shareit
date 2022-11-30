@@ -1,6 +1,6 @@
 package ru.practicum.shareit.item.mapper;
 
-import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.CommentFullDto;
 import ru.practicum.shareit.item.model.Comment;
@@ -9,10 +9,10 @@ import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 
-@UtilityClass
+@Component
 public class CommentMapper {
 
-    public static CommentFullDto toCommentFullDto(Comment comment) {
+    public CommentFullDto toCommentFullDto(Comment comment) {
         return CommentFullDto.builder()
                 .id(comment.getId())
                 .text(comment.getText())
@@ -21,7 +21,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public static Comment fromCommentDto(CommentDto dto, Item item, User author) {
+    public Comment fromCommentDto(CommentDto dto, Item item, User author) {
         return Comment.builder()
                 .author(author)
                 .item(item)
