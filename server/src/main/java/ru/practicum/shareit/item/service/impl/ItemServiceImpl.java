@@ -94,15 +94,9 @@ public class ItemServiceImpl implements ItemCrudService<ItemFullDto> {
         if (item.getOwner().getId() != userId) {
             throw new NotFoundException(OWNER_NOT_FOUND.getTitle());
         }
-        if (itemDto.getName() != null) {
-            item.setName(itemDto.getName());
-        }
-        if (itemDto.getDescription() != null) {
-            item.setDescription(itemDto.getDescription());
-        }
-        if (itemDto.getAvailable() != null) {
-            item.setAvailable(itemDto.getAvailable());
-        }
+        Optional.ofNullable(itemDto.getName()).ifPresent(item::setName);
+        Optional.ofNullable(itemDto.getDescription()).ifPresent(item::setDescription);
+        Optional.ofNullable(itemDto.getAvailable()).ifPresent(item::setAvailable);
         return Optional.ofNullable(itemMapper.toItemFullDto(Optional.of(itemRepository.save(item))
                 .orElseThrow((() -> new NotFoundException(ITEM_NOT_FOUND.getTitle())))));
     }

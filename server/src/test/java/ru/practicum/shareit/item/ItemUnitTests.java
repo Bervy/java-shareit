@@ -229,22 +229,6 @@ class ItemUnitTests {
         verify(commentRepository, times(1)).save(comment);
     }
 
-//    @Test
-//    void search_shouldReturnNewArraylist() throws ValidationException {
-//        List<ItemFullDto> items = itemService.search("", FROM, SIZE);
-//
-//        assertEquals(0, items.size());
-//    }
-
-//    @Test
-//    void addComment_shouldThrowValidationException() throws ValidationException {
-//        commentDto.setText("");
-//        Exception exception = assertThrows(ValidationException.class, () ->
-//                itemService.addComment(ID_1, ID_1, commentDto));
-//
-//        assertEquals(EMPTY_NAME.getTitle(), exception.getMessage());
-//    }
-
     @Test
     void addComment_shouldThrowValidationException_BookingStatusNotApproved() throws ValidationException {
         when(bookingRepository.findAllByBookerId(ID_1)).thenReturn(List.of(booking));
@@ -264,36 +248,6 @@ class ItemUnitTests {
         assertEquals(USER_NOT_FOUND.getTitle(), exception.getMessage());
     }
 
-//    @Test
-//    void save_shouldThrowValidationException_availableNotFound() throws ValidationException {
-//        when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
-//        itemFullDto.setAvailable(null);
-//        Exception exception = assertThrows(ValidationException.class, () ->
-//                itemService.save(ID_1, itemFullDto));
-//
-//        assertEquals(AVAILABLE_NOT_FOUND.getTitle(), exception.getMessage());
-//    }
-
-//    @Test
-//    void save_shouldThrowValidationException_nameBlank() throws ValidationException {
-//        when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
-//        itemFullDto.setName("");
-//        Exception exception = assertThrows(ValidationException.class, () ->
-//                itemService.save(ID_1, itemFullDto));
-//
-//        assertEquals(EMPTY_NAME.getTitle(), exception.getMessage());
-//    }
-
-//    @Test
-//    void save_shouldThrowValidationException_descriptionNotFound() throws ValidationException {
-//        when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
-//        itemFullDto.setDescription(null);
-//        Exception exception = assertThrows(ValidationException.class, () ->
-//                itemService.save(ID_1, itemFullDto));
-//
-//        assertEquals(DESCRIPTION_NOT_FOUND.getTitle(), exception.getMessage());
-//    }
-
     @Test
     void update_shouldThrowNotFoundException_ownerNotFound() throws ValidationException {
         when(itemRepository.findById(ID_1)).thenReturn(Optional.ofNullable(item1));
@@ -302,12 +256,4 @@ class ItemUnitTests {
 
         assertEquals(OWNER_NOT_FOUND.getTitle(), exception.getMessage());
     }
-
-//    @Test
-//    void save_shouldThrowValidationException_fromOrSizeLessThanZero() throws ValidationException {
-//        Exception exception = assertThrows(ValidationException.class, () ->
-//                itemService.findAll(ID_1, -1, SIZE));
-//
-//        assertEquals(FROM_OR_SIZE_LESS_THAN_ZERO.getTitle(), exception.getMessage());
-//    }
 }

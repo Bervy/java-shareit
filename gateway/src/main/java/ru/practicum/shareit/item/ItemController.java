@@ -48,7 +48,7 @@ public class ItemController {
         if (itemDto.getAvailable() == null) {
             throw new ValidationException(AVAILABLE_NOT_FOUND.getTitle());
         }
-        if (!StringUtils.isNotBlank(itemDto.getName())) {
+        if (StringUtils.isBlank(itemDto.getName())) {
             throw new ValidationException(EMPTY_NAME.getTitle());
         }
         if (itemDto.getDescription() == null) {
