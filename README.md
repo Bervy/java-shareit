@@ -9,7 +9,7 @@
 Использованные технологии:
 -
 
-- Java 11,Maven, Spring-Boot, Hibernate, Postgresql, Lombok, Docker, Jpa
+- Java 11,Maven, Spring-Boot, Hibernate, Postgresql, Lombok, Docker, Jpa, AOP
 
 Функционал приложения:
 -
